@@ -19,4 +19,6 @@ Generate a keypair and create a note:
 python vault.py key generate --name "User" --email user@example.com --passphrase yourpass
 python vault.py note create "My secret"
 python vault.py note read note.enc
+python vault.py note share "hello team" --recipients user1_pub.asc user2_pub.asc
+python vault.py key list
 ```

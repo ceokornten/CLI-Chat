@@ -43,6 +43,34 @@ Read and decrypt the note:
 python vault.py note read note.enc
 ```
 
+### Sharing notes with multiple recipients
+
+Use the `share` command and supply one or more public key files:
+
+```bash
+python vault.py note share "hello team" --recipients user1_pub.asc user2_pub.asc
+```
+
+## Managing Keys
+
+List keys stored in the `keys/` directory:
+
+```bash
+python vault.py key list
+```
+
+Import an additional key file:
+
+```bash
+python vault.py key import another_pub.asc
+```
+
+Delete an unwanted key:
+
+```bash
+python vault.py key delete user2_priv.asc
+```
+
 ## File and Group Commands
 The `file` and `group` command groups exist but contain placeholders. They will eventually support uploading encrypted files and managing collaboration groups.
 

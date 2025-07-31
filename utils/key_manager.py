@@ -7,6 +7,7 @@ PUBLIC_KEY_FILE = KEY_DIR / 'public.asc'
 PRIVATE_KEY_FILE = KEY_DIR / 'private.asc'
 
 KEY_DIR.mkdir(exist_ok=True)
+(KEY_DIR / 'backup').mkdir(exist_ok=True)
 
 def generate_keypair(name: str, email: str, passphrase: str):
     key = PGPKey.new(PubKeyAlgorithm.RSAEncryptOrSign, 2048)
@@ -28,3 +29,13 @@ def load_default_privkey():
     if not PRIVATE_KEY_FILE.exists():
         raise FileNotFoundError('No private key found; generate one with generate-keypair')
     return PGPKey.from_file(PRIVATE_KEY_FILE)[0]
+
+
+def backup_key(file_path):
+    import shutil
+    import time
+    name = Path(file_path).stem
+    timestamp = time.strftime('%Y%m%d%H%M%S')
+    backup_dir = KEY_DIR / 'backup'
+    backup_dir.mkdir(exist_ok=True)
+    shutil.copy(file_path, backup_dir / f"{name}_{timestamp}.asc")
