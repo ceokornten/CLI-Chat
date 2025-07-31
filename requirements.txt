@@ -1,3 +1,2 @@
-click
-pgpy
-cryptography
+pgpy==0.6.0
+click==8.1.7

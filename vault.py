@@ -1,3 +1,8 @@
+import warnings
+from cryptography.utils import CryptographyDeprecationWarning
+warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
+
 import click
 
 from commands.note import note
