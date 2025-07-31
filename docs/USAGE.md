@@ -38,6 +38,15 @@ python vault.py note create "My secret note"
 ```
 The encrypted file is written to `note.enc`.
 
+## Interactive Chat Mode
+Launch the chat-based assistant by simply running:
+
+```bash
+python vault.py
+```
+
+Follow the on-screen prompts to encrypt, decrypt, and manage keys interactively.
+
 Read and decrypt the note:
 ```bash
 python vault.py note read note.enc

@@ -14,6 +14,11 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+Start the interactive chat assistant:
+```bash
+python vault.py
+```
+
 Generate a keypair and create a note:
 ```bash
 python vault.py key generate --name "User" --email user@example.com --passphrase yourpass
