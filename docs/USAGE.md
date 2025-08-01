@@ -80,8 +80,22 @@ Delete an unwanted key:
 python vault.py key delete user2_priv.asc
 ```
 
-## File and Group Commands
-The `file` and `group` command groups exist but contain placeholders. They will eventually support uploading encrypted files and managing collaboration groups.
+## Group Commands
+Create a new group and add members:
+```bash
+python vault.py group create dev-team
+python vault.py group add-member dev-team user1_pub.asc
+```
+
+Send an encrypted message to the group:
+```bash
+python vault.py group chat dev-team --message "Hello team"
+```
+
+List members of a group:
+```bash
+python vault.py group members dev-team
+```
 
 ## Additional Help
 Run `python vault.py --help` to see the available command groups and options.

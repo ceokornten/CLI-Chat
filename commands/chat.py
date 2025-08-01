@@ -3,6 +3,12 @@ from pathlib import Path
 
 from commands.note import create as note_create_cmd, read as note_read_cmd, share as note_share_cmd
 from commands.key import list_cmd as key_list_cmd, import_cmd as key_import_cmd, delete_cmd as key_delete_cmd
+from commands.group import (
+    create_group as group_create_cmd,
+    add_member as group_add_cmd,
+    list_members as group_list_cmd,
+    send_group_message as group_chat_cmd,
+)
 from commands.status import check as status_check_cmd
 
 LOG_FILE = Path('logs/chat.log')
@@ -21,8 +27,9 @@ def start_chat():
                 "2. \U0001f513 \u0e16\u0e2d\u0e14\u0e23\u0e2b\u0e31\u0e2a\u0e02\u0e49\u0e2d\u0e04\u0e27\u0e32\u0e21\n"
                 "3. \U0001f5dd\ufe0f \u0e08\u0e31\u0e14\u0e01\u0e32\u0e23\u0e01\u0e38\u0e0d\u0e41\u0e08\u0e49\n"
                 "4. \U0001f465 \u0e41\u0e0a\u0e23\u0e4c\u0e02\u0e49\u0e2d\u0e04\u0e27\u0e32\u0e21\u0e01\u0e31\u0e1a\u0e17\u0e35\u0e21\n"
-                "5. \U0001f50d \u0e15\u0e23\u0e27\u0e08\u0e2a\u0e16\u0e32\u0e19\u0e30\n"
-                "6. \u274c \u0e2d\u0e2d\u0e01\u0e08\u0e32\u0e01\u0e23\u0e30\u0e1a\u0e1a"
+                "5. 👫 แชทแบบกลุ่ม\n"
+                "6. 🏷️ จัดการกลุ่ม\n"
+                "7. ❌ ออกจากระบบ"
             )
             choice = click.prompt('> ', default='', show_default=False)
             log.write(f"choice:{choice}\n")
@@ -54,8 +61,24 @@ def start_chat():
                 text = click.prompt('\U0001f4dd \u0e02\u0e49\u0e2d\u0e04\u0e27\u0e32\u0e21')
                 note_share_cmd.callback(text, recips)
             elif choice == '5':
-                status_check_cmd.callback()
+                gname = click.prompt('\U0001f4ac \u0e0a\u0e37\u0e48\u0e2d\u0e01\u0e25\u0e38\u0e48\u0e21 (\u0e40\u0e0a\u0e48\u0e19 dev-team):')
+                msg = click.prompt('\U0001f4dd \u0e02\u0e49\u0e2d\u0e04\u0e27\u0e32\u0e21')
+                group_chat_cmd.callback(gname, msg)
             elif choice == '6':
+                click.echo('\n\U0001f4cb \u0e08\u0e31\u0e14\u0e01\u0e25\u0e38\u0e48\u0e21:\n1. \u0e2a\u0e23\u0e49\u0e32\u0e07\u0e01\u0e25\u0e38\u0e48\u0e21\n2. \u0e40\u0e1e\u0e34\u0e48\u0e21\u0e2a\u0e21\u0e32\u0e0a\u0e34\u0e01\n3. \u0e41\u0e2a\u0e14\u0e07\u0e2a\u0e21\u0e32\u0e0a\u0e34\u0e01')
+                sub = click.prompt('> ', default='', show_default=False)
+                if sub == '1':
+                    name = click.prompt('\U0001f4db \u0e0a\u0e37\u0e48\u0e2d\u0e01\u0e25\u0e38\u0e48\u0e21\u0e43\u0e2b\u0e21\u0e48:')
+                    group_create_cmd.callback(name)
+                elif sub == '2':
+                    val = click.prompt('\U0001f464 \u0e0a\u0e37\u0e48\u0e2d\u0e01\u0e25\u0e38\u0e48\u0e21 \u0e41\u0e25\u0e30 key \u0e04\u0e31\u0e48\u0e19\u0e14\u0e49\u0e27\u0e22\u0e0a\u0e48\u0e2d\u0e07\u0e27\u0e32\u0e07:')
+                    parts = val.split()
+                    if len(parts) == 2:
+                        group_add_cmd.callback(parts[0], parts[1])
+                elif sub == '3':
+                    name = click.prompt('\U0001f4c2 \u0e0a\u0e37\u0e48\u0e2d\u0e01\u0e25\u0e38\u0e48\u0e21:')
+                    group_list_cmd.callback(name)
+            elif choice == '7':
                 click.echo('\U0001f44b \u0e02\u0e2d\u0e1a\u0e04\u0e38\u0e13\u0e17\u0e35\u0e48\u0e43\u0e0a\u0e49 VaultBot \u2014 \u0e25\u0e32\u0e01\u0e48\u0e2d\u0e19!')
                 break
             else:
