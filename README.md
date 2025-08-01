@@ -2,11 +2,11 @@
 
 This project provides a command-line interface for creating and managing encrypted notes and files. It uses PGP for asymmetric encryption and Fernet for password-based encryption. Group chat and group management are also supported. A Node.js backend will be added in the future.
 
-See [docs/USAGE.md](docs/USAGE.md) for a step-by-step guide.
+See [docs/USAGE.md](docs/USAGE.md) or the detailed [MANUAL](docs/MANUAL.md) for step-by-step instructions.
 
 ## Requirements
 - Python 3.11+
-- `pgpy` and `cryptography`
+- `pgpy`, `click`, `pymongo`
 
 ## Usage
 Install dependencies:
@@ -29,4 +29,9 @@ python vault.py key list
 python vault.py group create dev-team
 python vault.py group add-member dev-team user1_pub.asc
 python vault.py group chat dev-team --message "Hi team"
+```
+
+View the last few encrypted logs:
+```bash
+python vault.py log list --last 5
 ```

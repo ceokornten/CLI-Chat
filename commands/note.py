@@ -2,6 +2,7 @@ import click
 from pgpy import PGPKey, PGPMessage
 from utils.crypto import encrypt_text, decrypt_text
 from utils.key_manager import load_default_pubkey, load_default_privkey
+from commands.db import log_encrypted_note, log_event
 
 @click.group()
 def note():
@@ -16,6 +17,7 @@ def create(text):
     ciphertext = encrypt_text(text, pubkey=pubkey)
     with open('note.enc', 'wb') as f:
         f.write(ciphertext)
+    log_encrypted_note(ciphertext.decode() if isinstance(ciphertext, bytes) else ciphertext)
     click.echo('Note encrypted and saved to note.enc')
 
 @note.command()
@@ -27,6 +29,7 @@ def read(path):
         data = f.read()
     plaintext = decrypt_text(data, privkey=privkey)
     click.echo(plaintext)
+    log_event('note.read')
 
 
 def share_note(text, recipient_keys):
